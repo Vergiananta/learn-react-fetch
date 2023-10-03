@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { Fragment, useEffect, useState } from 'react';
+import axios from 'axios';
 
 function App() {
 
@@ -10,9 +11,9 @@ function App() {
     body: ''
   })
   const getUser = async () => {
-    const response = await fetch('https://jsonplaceholder.typicode.com/posts').then((res)=> res.json())
+    const response = await axios.get('https://jsonplaceholder.typicode.com/posts')
 
-    setUsers(response)
+    setUsers(response.data)
   }
 
   const handleChange = (name, value) => {
@@ -22,10 +23,7 @@ function App() {
   const onSubmit = async (e) => {
     e.preventDefault()
     try {
-    await fetch('https://jsonplaceholder.typicode.com/posts', {
-      method: 'POST',
-      body: JSON.stringify(payload)
-    })
+    await axios.post('https://jsonplaceholder.typicode.com/posts', payload)
     } catch(err) {
       console.warn(err)
     }
